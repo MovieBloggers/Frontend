@@ -1,6 +1,7 @@
 import  React,{useState, useRef} from "react";
 // import Jodit from "jodit";
 import "jodit/build/jodit.css";
+import "./Editor.css"
 import JoditEditor from "jodit-react";
 
 // const html = `
@@ -8,6 +9,9 @@ import JoditEditor from "jodit-react";
 // `;
 
 const Editor = () => {
+  if(localStorage.getItem('loggedin') == null){
+    window.location.assign("/login")
+ }
   React.useEffect(() => {
     setTimeout(()=>{
         // const editor = Jodit.make("#editor");
@@ -22,6 +26,7 @@ const Editor = () => {
     enableDragAndDropFileToEditor: true,
     readonly: false // all options from https://xdsoft.net/jodit/doc/
 }
+console.log(localStorage.getItem('loggedin'))
 function submit(content){
   console.log('hi',content)
   fetch('https://bingelist-backend-asfxz.run-ap-south1.goorm.io/blog',{
@@ -43,9 +48,10 @@ function submit(content){
   .then(json=>console.log("JSON",json))
 
 }
+
   return (
-    <div>
-      <a href="/page1">Go to Blogs!</a>
+    <div className="editor">
+      {/* <a href="/page1">Go to Blogs!</a> */}
       <JoditEditor
           ref={editor}
           value={content}
